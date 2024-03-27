@@ -8,6 +8,7 @@ screen = Screen()
 game_on = True
 list_countries = []
 guessed_countries = []
+not_guessed = []
 
 data = pd.read_csv('some_countries.csv')
 
@@ -24,8 +25,15 @@ while game_on:
         print(x, y)
 
     answer = screen.textinput(f"{len(guessed_countries)}/{len(list_countries)}", "Guess a european country:")
+
+    if answer.title() == "Exit":
+        not_guessed = [country for country in list_countries if country not in guessed_countries]
+        print(f"Countries missed: {not_guessed}")
+        game_on = False
+
+
     if answer.title() in list_countries:
-        guessed_countries.append(answer)
+        guessed_countries.append(answer.title())
         country = Turtle()
         country.hideturtle()
         country.penup()
